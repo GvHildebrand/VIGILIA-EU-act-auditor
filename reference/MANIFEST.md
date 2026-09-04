@@ -11,7 +11,7 @@ where this manifest answers them:
 |---|---|
 | Where did this text come from? | § Provenance — CELEX id, exact URL, retrieval date, and the script that fetched it |
 | Is it the *authentic* text? | § Authenticity — and no, the consolidated file is not, and this manifest says so |
-| Has it been altered since? | § Integrity — SHA-256 for every file, checked by `tools/verify_references.py` |
+| Has it been altered since? | § Integrity — SHA-256 for every file, checked by `_verify/verify_references.py` |
 
 ---
 
@@ -33,11 +33,11 @@ publisher's machine-readable interface to the same documents, and it answers.
 
 The seven provision files under `32024R1689/`, `32026R1744/` and
 `02024R1689-20260727/` are generated from those three sources by
-`tools/extract_reference.py`. **Nothing in this folder is typed by hand.** To
+`_verify/extract_reference.py`. **Nothing in this folder is typed by hand.** To
 prove it:
 
 ```bash
-bash reference/fetch-sources.sh && python3 tools/extract_reference.py && git diff --stat
+bash reference/fetch-sources.sh && python3 _verify/extract_reference.py && git diff --stat
 ```
 
 An empty diff means the standard shipped here is byte-identical to the standard
@@ -74,7 +74,7 @@ EUR-Lex says this of every consolidated text, including ours:
 **Therefore:** findings cite `32024R1689/` and `32026R1744/` — the OJ texts. The
 consolidated file is shipped for one job only: an independent check that our
 reading of the amendment is right (below). A finding that cites only the
-consolidated text is a defect, and `tools/verify_citations.py` rejects it.
+consolidated text is a defect, and `_verify/verify_citations.py` rejects it.
 
 ---
 
@@ -82,7 +82,7 @@ consolidated text is a defect, and `tools/verify_citations.py` rejects it.
 
 Article 50 was amended between its publication and today. Rather than ask a reader
 to take our word for what changed, the two texts are compared mechanically by
-`tools/verify_references.py`, which asserts:
+`_verify/verify_references.py`, which asserts:
 
 - the OJ Article 50 and the consolidated Article 50 contain the **same ten blocks**;
 - **nine are byte-identical**;
@@ -119,7 +119,7 @@ carries the terms above.
 SHA-256 for every file here. Verify with:
 
 ```bash
-python3 tools/verify_references.py
+python3 _verify/verify_references.py
 ```
 
 Regenerate after a legitimate refresh with `--write`. Regenerating is not a fix
@@ -129,13 +129,13 @@ the text under your auditor moved and every finding citing it is suspect.
 <!-- checksums:start -->
 
 ```
-c402f8efdad18abc0d186cb20d95ceeb9b6099703dc18bea8efdf82cdbd1c37b  02024R1689-20260727/article-50-consolidated.md
-ff5d63cc5f6711de119bd9684c86b875ef54bc948ea54a2daace301ec665c522  32024R1689/article-111-113-application.md
-8106a99de453252147e4f1026d3b597f1520c6b2208767df05d7073960a042a9  32024R1689/article-3-definitions.md
-9d358f426e891ee4ff36726d34155ab51060f9c3c36fba4c6e9d1af80331acf0  32024R1689/article-50.md
-3d311b0817bcd382855b98927ead7f46a5e8f6ffb930378f389ef12779be8097  32024R1689/article-99-penalties.md
-0a829ff5309a4374bd5ac7a8a92c3aa03dfc64c740b5368275d33403d371c217  32024R1689/recitals-132-137.md
-ce119c46802eebee951d80663f9d0f86cc5378494136b4c9392c3a2a6b72f625  32026R1744/amendments-to-article-50-and-111.md
+2c6d795feed94cb35a51075283489b95fa5cceedfd3fcf21b5c17479f65fb12b  02024R1689-20260727/article-50-consolidated.md
+93dc8e246b2f1db6472119148a992bc09fcaf7d0020d7ab0d12cccd2c70e07f4  32024R1689/article-111-113-application.md
+d1712fb5a5d0d167e7a87b41ba0dee17d833572372f825b3797999d8d2f2722c  32024R1689/article-3-definitions.md
+51c5e3cb762dd83ff5de7026de4f1fbee4045c92c9bff9ac1a7bb2084ae58943  32024R1689/article-50.md
+0da1eaf9542873c3f2198add9302b809b4760210c3b7543e05e0324d13682343  32024R1689/article-99-penalties.md
+3cefacda24d8b9a0f5f42b175f0eb401881b2684060110be7c76773f9070eb7a  32024R1689/recitals-132-137.md
+df9c6265712b2e79a6cebee041317b778bda4e391396995770f7a9833daa4c01  32026R1744/amendments-to-article-50-and-111.md
 5e7719f77e8a606b257dc25958ee3222c4383300a5a34270a5b850a2ce8b8715  _source/02024R1689-20260727.xhtml
 8f0b656302f9864cc87e040c371f209a9d65ae1a6cecc25ca5eb737e872d721a  _source/32024R1689.xhtml
 9d754652b867722807e4219c85912ce354233e58a1b4eb8c7752b4d1922993db  _source/32026R1744.xhtml

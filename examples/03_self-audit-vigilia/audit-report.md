@@ -6,7 +6,7 @@ artifact_version: evidence captured 2026-09-03
 audited_on: 2026-09-03
 auditor: VIGILIA-EU-act-auditor
 register_version: 1.0.0
-reference_fingerprint: f8a28ecc3811b9dc
+reference_fingerprint: 3fa2319d6595d47a
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Public surfaces only; the authenticated workspace was not examined.
 trust: observed=5 inferred=4 declared=0 none=2
 ```
@@ -530,7 +530,7 @@ the error is upstream in a separate repository.
 |---|---|
 | Standard | Regulation (EU) 2024/1689, Article 50, as amended by Regulation (EU) 2026/1744 |
 | Authentic text | OJ L, 2024/1689, 12.7.2024 — shipped verbatim in `reference/32024R1689/` |
-| Reference fingerprint | `f8a28ecc3811b9dc` |
+| Reference fingerprint | `3fa2319d6595d47a` |
 | Register version | 1.0.0 |
 | Obligations in register | 11 — all reported above |
 

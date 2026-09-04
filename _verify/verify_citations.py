@@ -16,20 +16,22 @@ things that go wrong when a language model writes a compliance report:
                           INSUFFICIENT_EVIDENCE must say what would resolve it.
 
 Usage:
-    python3 tools/verify_citations.py examples/03_self-audit-vigilia/audit-report.md
-    python3 tools/verify_citations.py --all
+    python3 _verify/verify_citations.py examples/03_self-audit-vigilia/audit-report.md
+    python3 _verify/verify_citations.py --all
 """
 
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import register  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
-REGISTER = ROOT / "provisions" / "article-50.provisions.json"
+REGISTER = ROOT / "provisions" / "article-50.md"
 MANIFEST = ROOT / "reference" / "MANIFEST.md"
 
 VERDICTS = {"PASS", "FAIL", "PARTIAL", "NOT_APPLICABLE", "INSUFFICIENT_EVIDENCE", "NOTED"}
@@ -295,7 +297,7 @@ def check_report(path: Path, register: dict) -> list[str]:
 
 
 def main() -> int:
-    register = json.loads(REGISTER.read_text(encoding="utf-8"))
+    reg = register.load(REGISTER)
 
     if "--all" in sys.argv:
         reports = sorted(ROOT.glob("examples/*/audit-report.md"))
@@ -309,14 +311,14 @@ def main() -> int:
             return 2
         reports = [Path(a) if Path(a).is_absolute() else ROOT / a for a in args]
 
-    print(f"verifying citations  {DIM}register {register['version']} · reference {manifest_fingerprint()}{OFF}")
+    print(f"verifying citations  {DIM}register {reg['version']} · reference {manifest_fingerprint()}{OFF}")
     failed = 0
     for report in reports:
         if not report.is_file():
             print(f"  {RED}!!{OFF}  {report}: no such file")
             failed += 1
             continue
-        problems = check_report(report, register)
+        problems = check_report(report, reg)
         if problems:
             failed += 1
             print(f"  {RED}FAIL{OFF}  {show(report)}")

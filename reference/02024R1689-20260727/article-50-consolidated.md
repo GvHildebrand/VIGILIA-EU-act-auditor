@@ -3,7 +3,7 @@
 > **Source** Consolidated text 02024R1689 — EN — 27.07.2026 — 001.001, CELEX 02024R1689-20260727.
 > **EUR-Lex states of this consolidated text:** “This text is meant purely as a documentation tool and has no legal effect. The Union’s institutions do not assume any liability for its contents. The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal of the European Union” — which is why findings cite the OJ text above, and use this file only to cross-check the amendment.
 
-> Extracted verbatim by `tools/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
+> Extracted verbatim by `_verify/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
 
 ---
 

@@ -5,7 +5,7 @@ extract_reference.py — build reference/ from the authentic sources.
 Nothing in reference/ is typed by hand. Every provision file is produced by this
 script from the XHTML the EU Publications Office served, so a reader can run
 
-    bash reference/fetch-sources.sh && python3 tools/extract_reference.py && git diff
+    bash reference/fetch-sources.sh && python3 _verify/extract_reference.py && git diff
 
 and see that the standard shipped in this repo is byte-identical to the standard
 the EU publishes today. An empty diff is the proof.
@@ -118,7 +118,7 @@ def write(path: Path, title: str, provenance: list[str], body: list[str]) -> Non
     lines += [f"> {p}" for p in provenance]
     lines += [
         "",
-        "> Extracted verbatim by `tools/extract_reference.py`. Whitespace"
+        "> Extracted verbatim by `_verify/extract_reference.py`. Whitespace"
         " normalised; no other change. Cite by line number.",
         "",
         "---",
@@ -262,7 +262,7 @@ def main() -> int:
         blocks_consolidated(div_by_id(cons, "art_50")),
     )
 
-    print("\ndone. next:  python3 tools/verify_references.py --write")
+    print("\ndone. next:  python3 _verify/verify_references.py --write")
     return 0
 
 

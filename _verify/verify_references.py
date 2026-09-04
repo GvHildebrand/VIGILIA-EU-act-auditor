@@ -13,8 +13,8 @@ Three checks:
                  nowhere else in Article 50.
 
 Usage:
-    python3 tools/verify_references.py            # verify, exit 1 on failure
-    python3 tools/verify_references.py --write    # regenerate the checksum block
+    python3 _verify/verify_references.py            # verify, exit 1 on failure
+    python3 _verify/verify_references.py --write    # regenerate the checksum block
 
 --write is for a deliberate refresh of the sources. It is not a way to make a
 failing check pass: if a hash moved and you did not refresh on purpose, the text

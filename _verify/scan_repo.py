@@ -18,8 +18,8 @@ which output modalities it generates, whether anything in it marks output as
 synthetic, and where the strings that look like AI disclosures live.
 
 Usage:
-    python3 tools/scan_repo.py /path/to/your/product
-    python3 tools/scan_repo.py /path/to/your/product --out ./my-audit
+    python3 _verify/scan_repo.py /path/to/your/product
+    python3 _verify/scan_repo.py /path/to/your/product --out ./my-audit
 """
 
 from __future__ import annotations
@@ -215,7 +215,7 @@ def estate_report(root: Path, hits, disclosures, n_files: int) -> str:
     lines = [
         f"# Estate inventory — {root.name}",
         "",
-        f"`tools/scan_repo.py` read {n_files} files and found **{len(units)} candidate "
+        f"`_verify/scan_repo.py` read {n_files} files and found **{len(units)} candidate "
         f"system(s)** and **{len(agents)} agent definition file(s)**.",
         "",
         "> **This is an inventory, not an audit.** A row here means something in that "
@@ -320,7 +320,7 @@ def main() -> int:
 
     (pack / "system-facts.md").write_text(f"""# System facts — {root.name}
 
-> Half of this file was written by `tools/scan_repo.py` from the codebase at
+> Half of this file was written by `_verify/scan_repo.py` from the codebase at
 > `{root}` ({n_files} files read). **The other half it refused to write.**
 >
 > Rows marked NOT ESTABLISHED turn on facts that are not in any codebase. If you
@@ -442,7 +442,7 @@ footer has not been provided at the time of first interaction.
 
     (args.out / "SCAN-NOTES.md").write_text(f"""# Scan notes
 
-`tools/scan_repo.py` read **{n_files} files** under `{root}` and wrote the
+`_verify/scan_repo.py` read **{n_files} files** under `{root}` and wrote the
 evidence pack next to this file.
 
 ## What it did
@@ -483,7 +483,7 @@ metadata dump from a real generated file — see `evidence-pack/outputs/README.m
 4. Hand the pack to the auditor, then verify what comes back:
 
 ```bash
-python3 tools/verify_citations.py path/to/audit-report.md
+python3 _verify/verify_citations.py path/to/audit-report.md
 ```
 """, encoding="utf-8")
 

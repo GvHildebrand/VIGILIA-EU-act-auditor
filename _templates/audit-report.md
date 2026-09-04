@@ -2,12 +2,12 @@
 
 <!--
   TEMPLATE. Copy this file, fill it in, delete these comments.
-  The ```audit and ```finding blocks are parsed by tools/verify_citations.py.
+  The ```audit and ```finding blocks are parsed by _verify/verify_citations.py.
   Prose outside them is for the reader and is not parsed — put your reasoning
   there, not inside the blocks.
 
   Rules that will fail verification if you break them:
-    · one ```finding block per obligation in provisions/article-50.provisions.json
+    · one ```finding block per obligation in provisions/article-50.md
     · exactly one, no more, no fewer — eleven blocks
     · `quote` must appear byte-for-byte at `cite`, in an authentic OJ text
     · `severity` must be what the matrix in rules.md produces
@@ -23,7 +23,7 @@ artifact_version: <commit, release or retrieval date of the artifact>
 audited_on: <YYYY-MM-DD>
 auditor: VIGILIA-EU-act-auditor
 register_version: 1.0.0
-reference_fingerprint: f8a28ecc3811b9dc
+reference_fingerprint: 3fa2319d6595d47a
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Nothing else.
 trust: observed=0 inferred=0 declared=0 none=0   # recomputed and checked by verify_citations.py
 ```
@@ -107,9 +107,9 @@ remediation: <what would make it pass, in the provision's own terms; omit for PA
 | | |
 |---|---|
 | Standard | Regulation (EU) 2024/1689, Article 50, as amended by Regulation (EU) 2026/1744 |
-| Reference fingerprint | `f8a28ecc3811b9dc` |
+| Reference fingerprint | `3fa2319d6595d47a` |
 | Register version | 1.0.0 |
-| Citations verified | `python3 tools/verify_citations.py <this file>` |
+| Citations verified | `python3 _verify/verify_citations.py <this file>` |
 
 **Scope limits.** This audit covers Article 50 and nothing else. Article 50(6)
 provides that paragraphs 1 to 4 do not affect the requirements of Chapter III and

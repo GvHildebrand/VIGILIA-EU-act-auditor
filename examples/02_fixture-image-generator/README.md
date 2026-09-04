@@ -21,5 +21,5 @@ carve-out — recorded as NOT_APPLICABLE with the exemption named, not as a PASS
 Run it:
 
 ```bash
-python3 tools/verify_citations.py examples/02_fixture-image-generator/audit-report.md
+python3 _verify/verify_citations.py examples/02_fixture-image-generator/audit-report.md
 ```

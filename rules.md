@@ -33,7 +33,7 @@ as common.
 ## Step 2 — Applicability, one obligation at a time
 
 For each of the eleven obligations in
-[`provisions/article-50.provisions.json`](provisions/article-50.provisions.json):
+[`provisions/article-50.md`](provisions/article-50.md):
 
 **a. Is the trigger met?** Against the scoping table, not against impressions.
 Trigger not met → `NOT_APPLICABLE`, `basis: trigger_not_met`, with the reason.
@@ -102,7 +102,7 @@ about what reaches a person and that is visible.
 
 Every report totals these in its header and states plainly how many verdicts would
 collapse if the operator's statements were false.
-`tools/verify_citations.py` recomputes the totals and fails the report if the
+`_verify/verify_citations.py` recomputes the totals and fails the report if the
 header understates them. **An audit may not hide how much it is trusting.**
 
 ---
@@ -153,7 +153,7 @@ the stakes; it does not set the severity.
 | `absolute` + `in_force` + `PARTIAL` | **MAJOR** |
 
 First matching row wins, read top to bottom. That is the whole rule, and
-`tools/verify_citations.py` recomputes it for every finding and fails the report if
+`_verify/verify_citations.py` recomputes it for every finding and fails the report if
 the declared severity differs.
 
 Two consequences are deliberate and neither is negotiable:
@@ -187,7 +187,7 @@ Three rules:
 
 ## Step 7 — Assemble
 
-Use [`templates/audit-report.md`](templates/audit-report.md). Prose carries the
+Use [`_templates/audit-report.md`](_templates/audit-report.md). Prose carries the
 reasoning; the fenced `finding` blocks carry the machine-checkable determination.
 
 The report ends with an attestation naming the reference fingerprint and register
@@ -195,7 +195,7 @@ version it was written against, so a reader can tell whether the standard has mo
 since. Then run:
 
 ```bash
-python3 tools/verify_citations.py <report>
+python3 _verify/verify_citations.py <report>
 ```
 
 **A report that does not pass is not finished.** The script does not check whether a

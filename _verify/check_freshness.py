@@ -22,8 +22,8 @@ offline — an auditor you can only check when the EU is reachable is a worse
 auditor. Run this before an audit you intend to rely on.
 
 Usage:
-    python3 tools/check_freshness.py          # exit 1 if reference/ is behind
-    python3 tools/check_freshness.py --quiet  # only speak up when something is wrong
+    python3 _verify/check_freshness.py          # exit 1 if reference/ is behind
+    python3 _verify/check_freshness.py --quiet  # only speak up when something is wrong
 """
 
 from __future__ import annotations

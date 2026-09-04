@@ -3,7 +3,7 @@
 > **Source** Regulation (EU) 2026/1744 (Digital Omnibus on AI), OJ L, 2026/1744, 24.7.2026, ELI: http://data.europa.eu/eli/reg/2026/1744/oj — CELEX 32026R1744. This is the authentic text.
 > **In force 27 July 2026.** Article 50(1)–(6) were left untouched. Only paragraph 7 was replaced, and a transitional window for 50(2) was added as Article 111(4). An auditor working from the 2024 text alone gets the deadline wrong.
 
-> Extracted verbatim by `tools/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
+> Extracted verbatim by `_verify/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
 
 ---
 

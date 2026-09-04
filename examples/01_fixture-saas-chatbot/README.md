@@ -19,5 +19,5 @@ It is here to show two things:
 Run it:
 
 ```bash
-python3 tools/verify_citations.py examples/01_fixture-saas-chatbot/audit-report.md
+python3 _verify/verify_citations.py examples/01_fixture-saas-chatbot/audit-report.md
 ```

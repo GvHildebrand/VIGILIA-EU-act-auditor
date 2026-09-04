@@ -14,7 +14,40 @@ the market on **2 December 2026**.
 **Start here → [QUICKSTART.md](QUICKSTART.md)** — nine of the eleven obligations
 ruled from one paste and six answers, in five minutes.
 
-![How a finding is checked against the law](docs/how-it-checks.svg)
+![How a finding is checked against the law](_assets/how-it-checks.svg)
+
+---
+
+## The auditor is the folder. The scripts only check it.
+
+Four files do the work, and none of them is code:
+
+| | |
+|---|---|
+| [`identity.md`](identity.md) | who the auditor is, and the six things it refuses to do |
+| [`rules.md`](rules.md) | the procedure, in order, and the severity matrix |
+| [`provisions/article-50.md`](provisions/article-50.md) | the eleven obligations, in markdown, written to be read |
+| [`reference/`](reference/) | the law itself, verbatim |
+
+Claude reads those and writes the report. `_verify/` produces nothing and decides
+nothing — it only proves the folder was not lied about. **You can do its job by
+hand.** Take any finding, take its quote and its `cite`, and look:
+
+```bash
+$ grep -n "shall ensure that the outputs" reference/32024R1689/article-50.md
+16:2. Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, shall ensure that the outputs of the AI system are marked in a machine-readable format and detectable as artificially generated or manipulated. Providers shall ensure their technical solutions are effective, interoperable, robust and reliable as far as this is technically feasible, taking into account the specificities and limitations of various types of content, the costs of implementation and the generally acknowledged state of the art, as may be reflected in relevant technical standards. This obligation shall not apply to the extent the AI systems perform an assistive function for standard editing or do not substantially alter the input data provided by the deployer or the semantics thereof, or where authorised by law to detect, prevent, investigate or prosecute criminal offences.
+```
+
+That is the whole mechanism. One line, no Python, no install. `make verify`
+automates that check across every quote in every report, adds the coverage and
+severity arithmetic, and exits non-zero — but it is a convenience, not the system.
+Delete `_verify/` and the auditor still audits; you just have to check its
+homework yourself.
+
+The register is markdown for the same reason. A JSON rule set would parse faster
+and be unreadable, and an auditor whose rules are legible only to its own tooling
+has rebuilt the opacity this repository exists to remove. There is one register,
+and it is the one you can read.
 
 ---
 
@@ -76,11 +109,10 @@ archive, a register) or `declared` (the operator's word). Every report totals th
 and states how many verdicts would collapse if the operator were lying. The
 verifier recomputes the totals and fails a report that understates them.
 
-The four shipped examples make the spectrum concrete: a cooperative operator with
-a supplied pack lands at `declared=5`, the self-audit of a live public site at
-`declared=0`, and an audit of a third-party product nobody can reach at
-`observed=0` — where every substantive verdict is `INSUFFICIENT_EVIDENCE`, because
-that is the honest answer.
+The shipped examples make the spectrum concrete: a cooperative operator with a
+supplied evidence pack lands at `declared=5`, while the self-audit of a live public
+site lands at `declared=0` — nothing there rests on anyone's word, because nobody
+was asked anything.
 
 So the claim is not that the output is right. It is that the output is
 **checkable** — the provision is named, the quote is real, nothing was skipped,
@@ -109,7 +141,7 @@ Retrieved from the **EU Publications Office**, not from a blog:
 
 ```bash
 bash reference/fetch-sources.sh          # re-fetch from publications.europa.eu
-python3 tools/extract_reference.py       # rebuild every provision file
+python3 _verify/extract_reference.py       # rebuild every provision file
 git diff --stat reference/               # empty means byte-identical to the EU's text
 ```
 
@@ -131,7 +163,7 @@ Article 111(4) is not in the 2024 Official Journal text. An auditor working from
 that text alone will tell you a system is in breach today when the Regulation gives
 it until December — or will miss the deadline entirely.
 
-Rather than ask you to take that on trust, `tools/verify_references.py` compares the
+Rather than ask you to take that on trust, `_verify/verify_references.py` compares the
 Official Journal Article 50 against the EU's own consolidated version:
 
 ```
@@ -156,8 +188,8 @@ Upload this folder. Then:
 > Audit my product against Article 50. Here is the evidence pack: [attach].
 
 Claude reads `identity.md`, follows `rules.md`, works through the eleven
-obligations in `provisions/article-50.provisions.json`, and writes a report using
-`templates/audit-report.md`.
+obligations in `provisions/article-50.md`, and writes a report using
+`_templates/audit-report.md`.
 
 ### In Claude Code
 
@@ -165,12 +197,12 @@ Clone it and open the directory — `CLAUDE.md` points at the same files. Then v
 what came back:
 
 ```bash
-python3 tools/verify_citations.py path/to/audit-report.md
+python3 _verify/verify_citations.py path/to/audit-report.md
 ```
 
 ### What to feed it — the evidence pack
 
-Copy [`templates/evidence-pack/`](templates/evidence-pack/) and fill in four things.
+Copy [`_templates/evidence-pack/`](_templates/evidence-pack/) and fill in four things.
 The auditor will not guess any of them; a gap becomes `INSUFFICIENT_EVIDENCE` with a
 note saying what would resolve it.
 
@@ -224,18 +256,18 @@ until the window closes, at which point the same evidence returns CRITICAL.
 make verify
 ```
 
-**`tools/verify_references.py`** — every file in `reference/` matches its recorded
+**`_verify/verify_references.py`** — every file in `reference/` matches its recorded
 SHA-256, and Article 50 in the Official Journal still agrees with the EU's
 consolidated version everywhere except paragraph 7.
 
-**`tools/verify_citations.py`** — for a report: every cited provision exists; every
+**`_verify/verify_citations.py`** — for a report: every cited provision exists; every
 quote appears **byte-for-byte** at the line it cites, in the authentic Official
 Journal text; **every obligation in the register appears exactly once**, so nothing
 was skipped; severity is recomputed from the matrix and must match; findings of
 breach point at real evidence; `INSUFFICIENT_EVIDENCE` says what would resolve it;
 `NOT_APPLICABLE` names a failed trigger or a satisfied exemption.
 
-**`tools/verify_pins.py`** — the verdicts of the three shipped examples are
+**`_verify/verify_pins.py`** — the verdicts of the three shipped examples are
 pinned. If the register changes, or somebody re-runs the auditor and it reaches a
 different conclusion, the diff shows up as a failing check instead of passing
 silently.
@@ -273,8 +305,8 @@ failure this repository exists to prevent.
 Take a passing report, doctor five things, and run it:
 
 ```
-$ python3 tools/verify_citations.py /tmp/tamper.md
-verifying citations  register 1.0.0 · reference f8a28ecc3811b9dc
+$ python3 _verify/verify_citations.py /tmp/tamper.md
+verifying citations  register 1.0.0 · reference 3fa2319d6595d47a
   FAIL  /tmp/tamper.md
       - F-01: QUOTE NOT FOUND at reference/32024R1689/article-50.md:L14
         claimed: Providers shall ensure that all AI systems intended to interact directly…
@@ -311,18 +343,17 @@ still need judgement — but you can now see exactly what the judgement was appl
 | [`reference/`](reference/) | **The standard itself**, verbatim, hashed, re-fetchable |
 | [`README.md`](README.md) | This file |
 | [`QUICKSTART.md`](QUICKSTART.md) | The five-minute path, and what it cannot answer without a metadata dump |
-| [`provisions/`](provisions/) | The eleven obligations, machine-readable — what makes verification possible |
-| [`examples/`](examples/) | The reports, and the evidence they ran on |
-| [`templates/`](templates/) | The evidence pack to fill in, and the report shape |
-| [`tools/`](tools/) | Fetch, extract, verify, check freshness, scan a codebase. Standard library only. |
+| [`provisions/`](provisions/) | The eleven obligations, in markdown. The only register — there is no machine-readable copy |
+| [`examples/`](examples/) | The reports, the evidence they ran on, and [how it runs](examples/00_how-it-runs.md) with no tooling |
+| [`_templates/`](_templates/) | The evidence pack to fill in, and the report shape |
+| [`_verify/`](_verify/) | Fetch, extract, verify, check freshness, scan a codebase. Standard library only, and optional — see above. |
 
-Four worked audits: a support chatbot ([01](examples/01_fixture-saas-chatbot/)),
-an image generator ([02](examples/02_fixture-image-generator/)), a self-audit of a
-live commercial service ([03](examples/03_self-audit-vigilia/)) that finds a MAJOR
-and a MINOR in its own author's product, and Spotify's AI DJ
-([04](examples/04_spotify-ai-dj/)), audited from the public record alone — which
-establishes a deep-fake trigger and a 2 December 2026 deadline, and returns
-INSUFFICIENT_EVIDENCE for everything that lives inside the app.
+Start with [how it actually runs](examples/00_how-it-runs.md) — the folder doing
+the work, no tooling involved. Then three worked audits: a support chatbot
+([01](examples/01_fixture-saas-chatbot/)), an image generator
+([02](examples/02_fixture-image-generator/)), and a self-audit of a live commercial
+service ([03](examples/03_self-audit-vigilia/)) that returns a MAJOR and a MINOR
+against its own author's product.
 
 ---
 

@@ -3,7 +3,7 @@
 > **Source** Regulation (EU) 2024/1689 (Artificial Intelligence Act), OJ L, 2024/1689, 12.7.2024, ELI: http://data.europa.eu/eli/reg/2024/1689/oj — CELEX 32024R1689. This is the authentic text.
 > **Article 111(4)**, the transitional window for Article 50(2), was *added* by Regulation (EU) 2026/1744 and does not appear in this OJ text. It is reproduced in `../32026R1744/`.
 
-> Extracted verbatim by `tools/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
+> Extracted verbatim by `_verify/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
 
 ---
 

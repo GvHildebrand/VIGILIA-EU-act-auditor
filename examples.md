@@ -1,12 +1,12 @@
 # Examples
 
 Three worked audits. All three are in [`examples/`](examples/) with the evidence
-they ran on, and all three pass `tools/verify_citations.py` — every quote below is
+they ran on, and all three pass `_verify/verify_citations.py` — every quote below is
 checked byte for byte against the Regulation before this repository is committed.
 
 ```
-$ python3 tools/verify_citations.py --all
-verifying citations  register 1.0.0 · reference f8a28ecc3811b9dc
+$ python3 _verify/verify_citations.py --all
+verifying citations  register 1.0.0 · reference 3fa2319d6595d47a
   ok  examples/01_fixture-saas-chatbot/audit-report.md
       11 findings, all 11 obligations covered
       NOTED 2  NOT_APPLICABLE 4  PARTIAL 1  PASS 4
@@ -19,6 +19,10 @@ verifying citations  register 1.0.0 · reference f8a28ecc3811b9dc
 
 all reports verified  every quote checked against the authentic text
 ```
+
+Start with [**00 — how it actually runs**](examples/00_how-it-runs.md): the folder
+doing the work with no tool involved, and the same finding checked by hand with
+one `grep`.
 
 | | Artifact | What it demonstrates |
 |---|---|---|
@@ -195,8 +199,8 @@ checks the quote against the authentic text.
 ## Run them yourself
 
 ```bash
-python3 tools/verify_references.py          # the standard is intact
-python3 tools/verify_citations.py --all     # the reports quote it correctly
+python3 _verify/verify_references.py          # the standard is intact
+python3 _verify/verify_citations.py --all     # the reports quote it correctly
 ```
 
 Then try to break one — change a quote, drop a finding, downgrade a severity, cite

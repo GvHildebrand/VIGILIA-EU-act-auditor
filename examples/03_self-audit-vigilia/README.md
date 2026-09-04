@@ -26,5 +26,5 @@ The audit covers **public surfaces only** — the authenticated €499 workspace
 not examined, and the report says so.
 
 ```bash
-python3 tools/verify_citations.py examples/03_self-audit-vigilia/audit-report.md
+python3 _verify/verify_citations.py examples/03_self-audit-vigilia/audit-report.md
 ```

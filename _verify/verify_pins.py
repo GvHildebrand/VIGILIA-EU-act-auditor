@@ -22,8 +22,8 @@ disagrees with the pin, that is a question to answer, not a failure to suppress 
 and the answer may well be that the pin was wrong.
 
 Usage:
-    python3 tools/verify_pins.py                 # check every example
-    python3 tools/verify_pins.py --emit           # (re)write pins from the reports
+    python3 _verify/verify_pins.py                 # check every example
+    python3 _verify/verify_pins.py --emit           # (re)write pins from the reports
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT / "_verify"))
 from verify_citations import parse_blocks  # noqa: E402
 
 FIELDS = ("verdict", "severity", "applicability")
@@ -56,7 +56,7 @@ def emit() -> int:
         pin = report.parent / "expected-verdicts.json"
         payload = {
             "_note": (
-                "Baseline verdicts for this example. Checked by tools/verify_pins.py. "
+                "Baseline verdicts for this example. Checked by _verify/verify_pins.py. "
                 "A mismatch is a question, not necessarily a defect — see the tool's "
                 "docstring. Regenerate deliberately with --emit, never to silence a diff."
             ),

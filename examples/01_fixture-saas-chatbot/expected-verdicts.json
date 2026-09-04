@@ -1,5 +1,5 @@
 {
-  "_note": "Baseline verdicts for this example. Checked by tools/verify_pins.py. A mismatch is a question, not necessarily a defect \u2014 see the tool's docstring. Regenerate deliberately with --emit, never to silence a diff.",
+  "_note": "Baseline verdicts for this example. Checked by _verify/verify_pins.py. A mismatch is a question, not necessarily a defect \u2014 see the tool's docstring. Regenerate deliberately with --emit, never to silence a diff.",
   "report": "audit-report.md",
   "verdicts": {
     "EUAIA-50-1": {

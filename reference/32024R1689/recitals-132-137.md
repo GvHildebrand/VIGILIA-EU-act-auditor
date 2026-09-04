@@ -3,7 +3,7 @@
 > **Source** Regulation (EU) 2024/1689 (Artificial Intelligence Act), OJ L, 2024/1689, 12.7.2024, ELI: http://data.europa.eu/eli/reg/2024/1689/oj — CELEX 32024R1689. This is the authentic text.
 > Recitals are interpretive, not operative: they explain how the Article is meant to be read and may not be cited as the obligation itself. Recital 137 is the reason this auditor refuses to call an artifact 'lawful'.
 
-> Extracted verbatim by `tools/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
+> Extracted verbatim by `_verify/extract_reference.py`. Whitespace normalised; no other change. Cite by line number.
 
 ---
 

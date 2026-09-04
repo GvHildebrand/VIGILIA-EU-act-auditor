@@ -87,7 +87,7 @@ mistake is [finding F-02 in the self-audit](examples/03_self-audit-vigilia/audit
 ## 5. Check what came back
 
 ```bash
-python3 tools/verify_citations.py path/to/audit-report.md
+python3 _verify/verify_citations.py path/to/audit-report.md
 ```
 
 This is the part that makes the report worth anything. It fails if a provision was
