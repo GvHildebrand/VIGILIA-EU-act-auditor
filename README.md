@@ -9,6 +9,11 @@ Article 50 has been in force since **2 August 2026**. Infringements sit in the
 machine-readable marking of synthetic content — falls due for systems already on
 the market on **2 December 2026**.
 
+**Start here → [QUICKSTART.md](QUICKSTART.md)** — nine of the eleven obligations
+ruled from one paste and six answers, in five minutes.
+
+![How a finding is checked against the law](docs/how-it-checks.svg)
+
 ---
 
 ## The problem this is actually solving
@@ -36,6 +41,37 @@ each quote against the text, byte for byte, and fails the report if anything was
 invented, misquoted, or quietly skipped.
 
 You do not have to trust the auditor. That is the point.
+
+---
+
+## What this does not guarantee
+
+The checks above are deterministic. Everything in this section is not, and no
+script can make it so.
+
+**The verdict itself.** The scripts check *form*, not *truth*. Article 50(1) turns
+on whether your AI nature is "obvious from the point of view of a natural person
+who is reasonably well-informed, observant and circumspect" — a legal standard a
+court applies, not a fact you can look up. What you get is an argued position with
+the provision attached, not the answer.
+
+**Garbage in.** If your evidence pack says you are a deployer and you are actually
+a provider, you get a confidently wrong report that passes every check. The
+verifier cannot know your inputs are false.
+
+**Repeatability.** Run the auditor twice and the judgement-heavy obligations can
+come out differently, and *both runs pass citation verification*. That is why the
+examples ship with pinned verdicts — not to make the model deterministic, which is
+impossible, but so the disagreement is visible instead of silent.
+
+**Staleness.** `reference/` is pinned to a date. `make freshness` is how you find
+out it has moved; nothing checks automatically.
+
+So the claim is not that the output is right. It is that the output is
+**checkable** — the provision is named, the quote is real, nothing was skipped,
+and the parts that need a human are marked as needing one instead of buried in
+fluent prose. That is a smaller claim than most compliance tooling makes, and it
+is the only one this repository can keep.
 
 ---
 
@@ -95,6 +131,8 @@ the amendment did and did not touch.
 ---
 
 ## Use it
+
+[QUICKSTART.md](QUICKSTART.md) is the fastest path. The full route:
 
 ### In a Claude project
 
@@ -255,6 +293,7 @@ still need judgement — but you can now see exactly what the judgement was appl
 | [`examples.md`](examples.md) | Three worked audits, findings with citations |
 | [`reference/`](reference/) | **The standard itself**, verbatim, hashed, re-fetchable |
 | [`README.md`](README.md) | This file |
+| [`QUICKSTART.md`](QUICKSTART.md) | The five-minute path, and what it cannot answer without a metadata dump |
 | [`provisions/`](provisions/) | The eleven obligations, machine-readable — what makes verification possible |
 | [`examples/`](examples/) | The reports, and the evidence they ran on |
 | [`templates/`](templates/) | The evidence pack to fill in, and the report shape |
@@ -266,35 +305,6 @@ of a live commercial service ([03](examples/03_self-audit-vigilia/)) that finds 
 MAJOR and a MINOR in its own author's product.
 
 ---
-
-## What this does not guarantee
-
-The checks above are deterministic. Everything in this section is not, and no
-script can make it so.
-
-**The verdict itself.** The scripts check *form*, not *truth*. Article 50(1) turns
-on whether your AI nature is "obvious from the point of view of a natural person
-who is reasonably well-informed, observant and circumspect" — a legal standard a
-court applies, not a fact you can look up. What you get is an argued position with
-the provision attached, not the answer.
-
-**Garbage in.** If your evidence pack says you are a deployer and you are actually
-a provider, you get a confidently wrong report that passes every check. The
-verifier cannot know your inputs are false.
-
-**Repeatability.** Run the auditor twice and the judgement-heavy obligations can
-come out differently, and *both runs pass citation verification*. That is why the
-examples ship with pinned verdicts — not to make the model deterministic, which is
-impossible, but so the disagreement is visible instead of silent.
-
-**Staleness.** `reference/` is pinned to a date. `make freshness` is how you find
-out it has moved; nothing checks automatically.
-
-So the claim is not that the output is right. It is that the output is
-**checkable** — the provision is named, the quote is real, nothing was skipped,
-and the parts that need a human are marked as needing one instead of buried in
-fluent prose. That is a smaller claim than most compliance tooling makes, and it
-is the only one this repository can keep.
 
 ## Scope, honestly
 

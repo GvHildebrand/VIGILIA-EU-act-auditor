@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 470" width="940" height="470" role="img" aria-labelledby="t d">
+  <title id="t">How a finding is checked against the law</title>
+  <desc id="d">A finding block cites Article 50(2) and quotes it. The quote must appear byte for byte at line 16 of the Official Journal text shipped in reference/. Four checks run: the provision must exist, the quote must match, no obligation may be skipped, and severity is recomputed from the published matrix.</desc>
+
+  <style>
+    .bg   { fill: #ffffff; }
+    .ink  { fill: #111111; }
+    .mut  { fill: #767676; }
+    .red  { fill: #9E2B25; }
+    .rule { stroke: #111111; stroke-width: 2; fill: none; }
+    .hair { stroke: #d8d8d8; stroke-width: 1; fill: none; }
+    .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+    .lbl  { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+    .h    { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 700; }
+    .p    { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="940" height="470"/>
+
+  <text class="h ink" x="28" y="34">Every finding cites a line. A script checks the line.</text>
+  <line class="rule" x1="28" y1="46" x2="912" y2="46"/>
+
+  <!-- ── left: the finding ─────────────────────────────────────────────── -->
+  <text class="lbl mut" x="28" y="76">The finding, in the report</text>
+  <rect class="hair" x="28" y="86" width="372" height="196"/>
+
+  <text class="mono ink" x="42" y="108">provision: <tspan class="red">EUAIA-50-2-MARK</tspan></text>
+  <text class="mono ink" x="42" y="128">verdict:   FAIL</text>
+  <text class="mono ink" x="42" y="148">severity:  MINOR</text>
+  <text class="mono mut" x="42" y="168">duty_force:    absolute</text>
+  <text class="mono mut" x="42" y="188">applicability: transitional</text>
+  <text class="mono ink" x="42" y="212">cite: <tspan class="red">…/article-50.md:L16</tspan></text>
+  <text class="mono ink" x="42" y="236">quote: <tspan class="mut">“…shall ensure that the</tspan></text>
+  <text class="mono mut" x="42" y="252">outputs of the AI system are marked in a</text>
+  <text class="mono mut" x="42" y="268">machine-readable format…”</text>
+
+  <!-- ── connector ─────────────────────────────────────────────────────── -->
+  <line class="rule" x1="416" y1="240" x2="504" y2="240"/>
+  <path class="rule" d="M498 234 L506 240 L498 246"/>
+  <text class="lbl red" x="460" y="228" text-anchor="middle">must match</text>
+  <text class="lbl mut" x="460" y="262" text-anchor="middle">byte for byte</text>
+
+  <!-- ── right: the law ────────────────────────────────────────────────── -->
+  <text class="lbl mut" x="520" y="76">The law, in reference/</text>
+  <rect class="hair" x="520" y="86" width="392" height="196"/>
+
+  <text class="mono mut" x="536" y="108">14 │ 1. Providers shall ensure that AI</text>
+  <text class="mono mut" x="536" y="124">   │ systems intended to interact…</text>
+  <text class="mono mut" x="536" y="140">15 │</text>
+
+  <rect x="522" y="150" width="388" height="72" fill="#f4f4f4"/>
+  <line x1="522" y1="150" x2="522" y2="222" stroke="#9E2B25" stroke-width="3"/>
+  <text class="mono ink" x="536" y="168">16 │ 2. Providers of AI systems, including</text>
+  <text class="mono ink" x="536" y="184">   │ general-purpose AI systems, generating</text>
+  <text class="mono ink" x="536" y="200">   │ synthetic audio, image, video or text</text>
+  <text class="mono ink" x="536" y="216">   │ content, shall ensure that the outputs…</text>
+
+  <text class="mono mut" x="536" y="240">17 │</text>
+  <text class="mono mut" x="536" y="256">18 │ 3. Deployers of an emotion recognition…</text>
+
+  <text class="p mut" x="520" y="302">Regulation (EU) 2024/1689, OJ L, 2024/1689, 12.7.2024 — verbatim,</text>
+  <text class="p mut" x="520" y="318">SHA-256 in MANIFEST.md, re-fetchable from the EU Publications Office.</text>
+
+  <!-- ── bottom: the four checks ───────────────────────────────────────── -->
+  <line class="rule" x1="28" y1="348" x2="912" y2="348"/>
+  <text class="lbl mut" x="28" y="374">make verify — rejects the report if</text>
+
+  <text class="mono ink" x="28" y="404">01</text>
+  <text class="p ink" x="56" y="404">the provision id does not exist</text>
+  <text class="mono ink" x="28" y="426">02</text>
+  <text class="p ink" x="56" y="426">the quote is not at that line</text>
+
+  <text class="mono ink" x="330" y="404">03</text>
+  <text class="p ink" x="358" y="404">an obligation was skipped</text>
+  <text class="mono ink" x="330" y="426">04</text>
+  <text class="p ink" x="358" y="426">severity is not what the matrix gives</text>
+
+  <text class="p mut" x="660" y="404">It does not check whether the</text>
+  <text class="p mut" x="660" y="420">verdict is legally right.</text>
+  <text class="p mut" x="660" y="436">Nothing can.</text>
+</svg>
