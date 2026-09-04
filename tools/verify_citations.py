@@ -33,11 +33,21 @@ REGISTER = ROOT / "provisions" / "article-50.provisions.json"
 MANIFEST = ROOT / "reference" / "MANIFEST.md"
 
 VERDICTS = {"PASS", "FAIL", "PARTIAL", "NOT_APPLICABLE", "INSUFFICIENT_EVIDENCE", "NOTED"}
+# How the evidence behind a verdict was obtained. This is the field that answers
+# "what if the operator lied": a reader can see exactly how much of the report
+# would collapse if they had.
+#   observed  the auditor saw the artifact itself — a rendered surface, a real
+#             output file, a response header
+#   inferred  derived from something about the artifact — source code, an
+#             archive snapshot, a public registry
+#   declared  the operator said so, and nothing independent confirms it
+#   none      the provision imposes no duty, so there is nothing to evidence
+PROVENANCE = {"observed", "inferred", "declared", "none"}
 APPLICABILITY = {"in_force", "transitional", "not_yet_applicable"}
 AUTHENTIC = ("reference/32024R1689/", "reference/32026R1744/")
 
 REQUIRED = ("id", "provision", "verdict", "severity", "duty_force",
-            "applicability", "cite", "quote", "finding")
+            "applicability", "provenance", "cite", "quote", "finding")
 
 GREEN, RED, YELLOW, DIM, OFF = "\033[32m", "\033[31m", "\033[33m", "\033[2m", "\033[0m"
 if not sys.stdout.isatty():
@@ -121,7 +131,7 @@ def check_report(path: Path, register: dict) -> list[str]:
         problems.append(f"expected exactly one ```audit header block, found {len(heads)}")
     else:
         head = heads[0]
-        for key in ("artifact", "audited_on", "register_version", "reference_fingerprint"):
+        for key in ("artifact", "audited_on", "register_version", "reference_fingerprint", "trust"):
             if key not in head:
                 problems.append(f"audit header is missing '{key}'")
         if head.get("register_version") not in (None, register["version"]):
@@ -177,6 +187,16 @@ def check_report(path: Path, register: dict) -> list[str]:
             problems.append(
                 f"{tag}: NOTED is for provisions that impose no duty on the audited party, "
                 f"and every such provision must use it ({pid} is '{ob['duty_force']}')"
+            )
+
+        if f["provenance"] not in PROVENANCE:
+            problems.append(
+                f"{tag}: provenance '{f['provenance']}' is not one of {sorted(PROVENANCE)}"
+            )
+        elif (f["provenance"] == "none") != (f["verdict"] == "NOTED"):
+            problems.append(
+                f"{tag}: provenance 'none' is only for NOTED provisions that impose no duty, "
+                f"and every NOTED finding must use it"
             )
 
         # 2 — misquoted provision
@@ -238,6 +258,19 @@ def check_report(path: Path, register: dict) -> list[str]:
                 f"running against (2 December 2026, Article 111(4))"
             )
 
+    # 5 — the report must state, correctly, how much of itself rests on trust
+    counts: dict[str, int] = {k: 0 for k in PROVENANCE}
+    for f in findings:
+        if f.get("provenance") in counts:
+            counts[f["provenance"]] += 1
+    stated = (heads[0].get("trust", "") if heads else "").strip()
+    expect = " ".join(f"{k}={counts[k]}" for k in ("observed", "inferred", "declared", "none"))
+    if stated and stated != expect:
+        problems.append(
+            f"the audit header claims trust '{stated}' but the findings give '{expect}'. "
+            f"A report may not misstate how much of itself depends on the operator's word."
+        )
+
     # 3 — skipped or duplicated obligation
     for oid in obligations:
         n = seen.get(oid, 0)
@@ -250,10 +283,14 @@ def check_report(path: Path, register: dict) -> list[str]:
         counts: dict[str, int] = {}
         for f in findings:
             counts[f["verdict"]] = counts.get(f["verdict"], 0) + 1
-        tally = "  ".join(f"{k} {v}" for k, v in sorted(counts.items()))
+        vt: dict[str, int] = {}
+        for f in findings:
+            vt[f["verdict"]] = vt.get(f["verdict"], 0) + 1
+        tally = "  ".join(f"{k} {v}" for k, v in sorted(vt.items()))
         print(f"  {GREEN}ok{OFF}  {show(path)}")
         print(f"      {len(findings)} findings, all {len(obligations)} obligations covered")
         print(f"      {DIM}{tally}{OFF}")
+        print(f"      {DIM}evidence: {expect}{OFF}")
     return problems
 
 

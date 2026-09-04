@@ -31,6 +31,7 @@ from pathlib import Path
 
 SKIP_DIRS = {
     ".git", ".claude", "node_modules", "vendor", "dist", "build", ".next", "out", "target",
+    ".vercel", ".turbo", ".output", ".svelte-kit", ".serverless", ".terraform",
     "__pycache__", ".venv", "venv", ".tox", "coverage", ".cache", ".turbo",
     "site-packages", ".mypy_cache", ".pytest_cache", "Pods", ".gradle",
 }
@@ -134,6 +135,147 @@ def yes_no(rows) -> str:
 
 
 UNKNOWN = "**NOT ESTABLISHED — you must answer this.**"
+
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Estate detection — a folder often holds several AI systems, not one
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Files that define an agent rather than merely call a model.
+AGENT_DEF_GLOBS = (
+    ".claude/agents/*.md", "agents/*.md", "agents/*/*.md",
+    "*/.claude/agents/*.md", "*/agents/*.md",
+    "**/*.agent.md", "**/*.agent.yaml", "**/*.agent.json",
+)
+# Files that mark the root of a deployable unit.
+MANIFESTS = ("package.json", "pyproject.toml", "requirements.txt", "go.mod",
+             "Cargo.toml", "Gemfile", "composer.json")
+# Directories that suggest the unit renders something a person sees.
+USER_FACING = ("app", "pages", "components", "public", "views", "templates",
+               "src/app", "src/pages", "web", "frontend", "ui")
+
+
+def find_agent_defs(root: Path) -> list[Path]:
+    out: list[Path] = []
+    for g in AGENT_DEF_GLOBS:
+        try:
+            for hit in root.glob(g):
+                if hit.is_file() and "node_modules" not in hit.parts and len(out) < 200:
+                    out.append(hit)
+        except (OSError, ValueError):
+            continue
+    return sorted(set(out))
+
+
+def find_units(root: Path, provider_files: set[str], gen_files: set[str]) -> list[Path]:
+    """Directories that look like their own deployable system."""
+    units: set[Path] = set()
+    for m in MANIFESTS:
+        for hit in root.rglob(m):
+            if any(part in SKIP_DIRS for part in hit.parts):
+                continue
+            rel = hit.parent.relative_to(root)
+            if len(rel.parts) <= 3:
+                units.add(hit.parent)
+    units.add(root)
+    # Keep only units that actually do AI work. A directory with a manifest and no
+    # model call is a library, not a system in scope, and listing it as a candidate
+    # wastes the reader's attention on a row they will only strike.
+    active = []
+    for u in units:
+        rel = str(u.relative_to(root))
+        pref = "" if rel in ("", ".") else rel + "/"
+        if any(f.startswith(pref) for f in provider_files | gen_files):
+            active.append(u)
+    return sorted(active)
+
+
+def estate_report(root: Path, hits, disclosures, n_files: int) -> str:
+    provider_files = {rel for rel, _, _ in hits["model_provider"]}
+    gen_files = {rel for k in ("text_generation", "image_generation",
+                               "audio_generation", "video_generation")
+                 for rel, _, _ in hits[k]}
+    mark_files = {rel for rel, _, _ in hits["provenance_marking"]}
+    disc_files = {rel for rel, _, _ in disclosures}
+
+    agents = find_agent_defs(root)
+    units = find_units(root, provider_files, gen_files)
+
+    rows = []
+    for u in units:
+        rel = str(u.relative_to(root)) or "."
+        pref = "" if rel == "." else rel + "/"
+        def under(s):
+            return sum(1 for f in s if f.startswith(pref))
+        facing = any((u / d).exists() for d in USER_FACING)
+        rows.append((rel, under(provider_files), under(gen_files),
+                     under(mark_files), under(disc_files), facing))
+
+    lines = [
+        f"# Estate inventory — {root.name}",
+        "",
+        f"`tools/scan_repo.py` read {n_files} files and found **{len(units)} candidate "
+        f"system(s)** and **{len(agents)} agent definition file(s)**.",
+        "",
+        "> **This is an inventory, not an audit.** A row here means something in that "
+        "directory calls a model or declares an agent. Whether it is a distinct AI "
+        "system placed on the market, who the provider is, and whether a person ever "
+        "meets its output are questions the folder cannot answer. Article 50 binds "
+        "systems, not directories.",
+        "",
+        "| Directory | Model calls | Generation | Marking | Disclosure strings | Renders UI? |",
+        "|---|---|---|---|---|---|",
+    ]
+    for rel, pc, gc, mc, dc, facing in rows:
+        lines.append(
+            f"| `{rel}` | {pc or '—'} | {gc or '—'} | "
+            f"{mc if mc else '**none**'} | {dc or '—'} | {'yes' if facing else 'no'} |"
+        )
+    if not rows:
+        lines.append("| _no candidate systems found_ | | | | | |")
+
+    lines += [
+        "",
+        "**Reading the columns.** A unit with generation calls and **no marking** is the "
+        "shape that fails Article 50(2) — but only source was read, so confirm against a "
+        "real generated file. A unit that renders UI is where Article 50(1) and 50(5) "
+        "live; one that does not is probably internal, and internal use still makes you "
+        "a provider under Article 3(11) if you put it into service for your own use.",
+        "",
+    ]
+
+    if agents:
+        lines += ["## Agent definitions found", ""]
+        for a in agents[:60]:
+            lines.append(f"- `{a.relative_to(root)}`")
+        if len(agents) > 60:
+            lines.append(f"- _…and {len(agents) - 60} more_")
+        lines += [
+            "",
+            "Each of these may or may not be a separate AI system for Article 50. An "
+            "agent that only reads files and reports to you internally still generates "
+            "text; whether a *natural person* ever meets that text is what decides "
+            "50(1), 50(4) and 50(5), and that is not in the file.",
+            "",
+        ]
+
+    lines += [
+        "## What to do with this",
+        "",
+        "1. Strike the rows that are not distinct AI systems, or not yours.",
+        "2. For each row that survives, answer the NOT ESTABLISHED questions in "
+        "`system-facts.md` — they differ per system, and provider-versus-deployer "
+        "especially so.",
+        "3. Run one real output through the metadata check per generating system.",
+        "4. Audit each system separately. **Article 50 applies per system.** One report "
+        "covering an estate of twelve agents is not an audit, it is an average.",
+        "",
+        "Every verdict produced from this inventory alone carries "
+        "`provenance: inferred` — derived from source, not observed in a running "
+        "product. The report will say so, and total it up.",
+    ]
+    return "\n".join(lines) + "\n"
 
 
 def main() -> int:
@@ -295,6 +437,9 @@ These corroborate. They rarely decide, and they never substitute for
 footer has not been provided at the time of first interaction.
 """, encoding="utf-8")
 
+    (args.out / "estate-inventory.md").write_text(
+        estate_report(root, hits, disclosures, n_files), encoding="utf-8")
+
     (args.out / "SCAN-NOTES.md").write_text(f"""# Scan notes
 
 `tools/scan_repo.py` read **{n_files} files** under `{root}` and wrote the
@@ -348,6 +493,7 @@ python3 tools/verify_citations.py path/to/audit-report.md
     print("  evidence-pack/first-interaction/         candidate disclosure strings, cited")
     print("  evidence-pack/outputs/                   EMPTY — you must supply a metadata dump")
     print("  evidence-pack/documents/                 detected policy files")
+    print("  estate-inventory.md                      candidate systems and agent definitions")
     print("  SCAN-NOTES.md                            what was and was not established")
     print("\nThis is a head start, not an audit. Complete it before handing it over.")
     return 0

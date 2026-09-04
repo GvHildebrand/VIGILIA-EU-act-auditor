@@ -83,6 +83,30 @@ evidence about 50(2).
 
 ---
 
+## Step 3b — Record how you know
+
+Every finding carries a `provenance` field. It is not decoration: it is the answer
+to "what if the operator lied to you".
+
+| Value | Means |
+|---|---|
+| `observed` | you saw the artifact itself — a rendered surface, a real output file, a response header |
+| `inferred` | you derived it from something *about* the artifact — source code, an archive snapshot, a public register |
+| `declared` | the operator said so, and nothing independent confirms it |
+| `none` | the provision imposes no duty, so there is nothing to evidence. Only for `NOTED`. |
+
+Prefer `observed`. Where a fact can be checked against the artifact rather than
+taken from the questionnaire, check it — the operator is usually the *weakest*
+available source for anything Article 50 asks about, because almost all of it is
+about what reaches a person and that is visible.
+
+Every report totals these in its header and states plainly how many verdicts would
+collapse if the operator's statements were false.
+`tools/verify_citations.py` recomputes the totals and fails the report if the
+header understates them. **An audit may not hide how much it is trusting.**
+
+---
+
 ## Step 4 — Verdict
 
 | Verdict | When |

@@ -13,6 +13,7 @@
     · `severity` must be what the matrix in rules.md produces
     · FAIL / PARTIAL / PASS need `evidence`; INSUFFICIENT_EVIDENCE needs
       `evidence_needed`; NOT_APPLICABLE needs `basis`
+    · every finding needs `provenance`, and the header `trust` line must match
     · a `transitional` finding must name 2 December 2026
 -->
 
@@ -24,6 +25,7 @@ auditor: EU AI Act Article 50 Auditor
 register_version: 1.0.0
 reference_fingerprint: f8a28ecc3811b9dc
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Nothing else.
+trust: observed=0 inferred=0 declared=0 none=0   # recomputed and checked by verify_citations.py
 ```
 
 ## What was audited
@@ -87,6 +89,7 @@ verdict: PASS
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: observed        # observed | inferred | declared | none (NOTED only)
 cite: reference/32024R1689/article-50.md:L14
 quote: <the words of the provision, byte for byte>
 evidence: <path or URL, with a line or selector>

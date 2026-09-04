@@ -8,6 +8,7 @@ auditor: EU AI Act Article 50 Auditor
 register_version: 1.0.0
 reference_fingerprint: f8a28ecc3811b9dc
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Public surfaces only; the authenticated workspace was not examined.
+trust: observed=5 inferred=4 declared=0 none=2
 ```
 
 > **Not a fixture, and not independent.** Vigilia is a live service that sells EU
@@ -76,6 +77,20 @@ operator's own published compliance table independently reaches.
 | OBSERVATION | 2 |
 | NONE | 7 |
 
+### How much of this rests on the operator's word
+
+| Evidence | Verdicts | Meaning |
+|---|---|---|
+| `observed` | 5 | the auditor saw the artifact itself — a rendered surface, a real output file, a response header |
+| `inferred` | 4 | derived from something *about* the artifact — source code, an archive snapshot, a public record |
+| `declared` | 0 | the operator said so, and nothing independent confirms it |
+| `none` | 2 | the provision imposes no duty, so there is nothing to evidence |
+
+**0 of 11 verdicts would collapse if the operator's statements were false.** Every finding
+carries its own `provenance`, so you can see which ones. `tools/verify_citations.py`
+recomputes these totals from the findings and fails the report if the header
+misstates them — an audit may not understate how much it is trusting.
+
 Vigilia discloses its AI authorship better than most publishers and still fails
 two obligations, in two different ways.
 
@@ -126,6 +141,7 @@ verdict: PASS
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: observed
 cite: reference/32024R1689/article-50.md:L14
 quote: Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system
 evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/dispatch-byline.md:L13
@@ -173,6 +189,7 @@ verdict: FAIL
 severity: MINOR
 duty_force: absolute
 applicability: transitional
+provenance: observed
 cite: reference/32024R1689/article-50.md:L16
 quote: Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, shall ensure that the outputs of the AI system are marked in a machine-readable format and detectable as artificially generated or manipulated.
 evidence: examples/03_self-audit-vigilia/evidence-pack/outputs/dispatch-structured-data.md:L34-L40
@@ -203,6 +220,7 @@ verdict: NOT_APPLICABLE
 severity: NONE
 duty_force: qualified
 applicability: transitional
+provenance: inferred
 cite: reference/32024R1689/article-50.md:L16
 quote: Providers shall ensure their technical solutions are effective, interoperable, robust and reliable as far as this is technically feasible, taking into account the specificities and limitations of various types of content, the costs of implementation and the generally acknowledged state of the art, as may be reflected in relevant technical standards.
 basis: trigger_not_met
@@ -226,6 +244,7 @@ verdict: NOT_APPLICABLE
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: inferred
 cite: reference/32024R1689/article-50.md:L18
 quote: Deployers of an emotion recognition system or a biometric categorisation system shall inform the natural persons exposed thereto of the operation of the system
 basis: trigger_not_met
@@ -247,6 +266,7 @@ verdict: NOT_APPLICABLE
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: inferred
 cite: reference/32024R1689/article-50.md:L18
 quote: and shall process the personal data in accordance with Regulations (EU) 2016/679 and (EU) 2018/1725 and Directive (EU) 2016/680, as applicable.
 basis: trigger_not_met
@@ -274,6 +294,7 @@ verdict: NOT_APPLICABLE
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: inferred
 cite: reference/32024R1689/article-50.md:L20
 quote: Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake, shall disclose that the content has been artificially generated or manipulated.
 basis: trigger_not_met
@@ -311,6 +332,7 @@ verdict: PASS
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: observed
 cite: reference/32024R1689/article-50.md:L22
 quote: Deployers of an AI system that generates or manipulates text which is published with the purpose of informing the public on matters of public interest shall disclose that the text has been artificially generated or manipulated.
 evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/dispatch-byline.md:L13-L15
@@ -356,6 +378,7 @@ verdict: PARTIAL
 severity: MAJOR
 duty_force: absolute
 applicability: in_force
+provenance: observed
 cite: reference/32024R1689/article-50.md:L24
 quote: The information referred to in paragraphs 1 to 4 shall be provided to the natural persons concerned in a clear and distinguishable manner at the latest at the time of the first interaction or exposure.
 evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/checker-surface.md:L27-L33
@@ -392,6 +415,7 @@ verdict: PASS
 severity: NONE
 duty_force: absolute
 applicability: in_force
+provenance: observed
 cite: reference/32024R1689/article-50.md:L24
 quote: The information shall conform to the applicable accessibility requirements.
 evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/dispatch-byline.md:L20-L28
@@ -417,6 +441,7 @@ verdict: NOTED
 severity: OBSERVATION
 duty_force: no_direct_duty
 applicability: in_force
+provenance: none
 cite: reference/32024R1689/article-50.md:L26
 quote: Paragraphs 1 to 4 shall not affect the requirements and obligations set out in Chapter III, and shall be without prejudice to other transparency obligations laid down in Union or national law for deployers of AI systems.
 finding: Reported as a scoping observation: this audit covers Article 50 only and does not speak to Chapter III, Chapter V, the GDPR, or any national obligation.
@@ -443,6 +468,7 @@ verdict: NOTED
 severity: OBSERVATION
 duty_force: no_direct_duty
 applicability: in_force
+provenance: none
 cite: reference/32024R1689/article-50.md:L28
 quote: The AI Office shall encourage and facilitate the drawing up of codes of practice at Union level to facilitate the effective implementation of the obligations regarding the detection and labelling of artificially generated or manipulated content.
 finding: Reported as an observation: Article 50(7) binds the Commission, and adherence to the transparency Code of Practice would be voluntary evidence toward F-02 rather than compliance in itself.

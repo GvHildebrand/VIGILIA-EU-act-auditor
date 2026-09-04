@@ -67,6 +67,19 @@ impossible, but so the disagreement is visible instead of silent.
 **Staleness.** `reference/` is pinned to a date. `make freshness` is how you find
 out it has moved; nothing checks automatically.
 
+**What it cannot stop is an operator lying to it** — so it does the next best
+thing and says how exposed it is. Every finding records whether its evidence was
+`observed` (the auditor saw the artifact), `inferred` (derived from code, an
+archive, a register) or `declared` (the operator's word). Every report totals them
+and states how many verdicts would collapse if the operator were lying. The
+verifier recomputes the totals and fails a report that understates them.
+
+The four shipped examples make the spectrum concrete: a cooperative operator with
+a supplied pack lands at `declared=5`, the self-audit of a live public site at
+`declared=0`, and an audit of a third-party product nobody can reach at
+`observed=0` — where every substantive verdict is `INSUFFICIENT_EVIDENCE`, because
+that is the honest answer.
+
 So the claim is not that the output is right. It is that the output is
 **checkable** — the provision is named, the quote is real, nothing was skipped,
 and the parts that need a human are marked as needing one instead of buried in
@@ -243,8 +256,10 @@ them. `verify` proves `reference/` is unaltered; `freshness` asks the different
 question of whether it is still *current*. A standard that is intact but
 superseded is exactly as wrong as one that was edited.
 
-`make audit-repo` reads your codebase and writes an evidence pack with the rows a
-machine can honestly fill — model-provider calls, generation calls by modality,
+`make audit-repo` reads your codebase and writes an **estate inventory** — every
+directory that calls a model or declares an agent, with its modalities, whether
+any marking code exists, and whether it renders UI — plus an evidence pack with
+the rows a machine can honestly fill — model-provider calls, generation calls by modality,
 provenance-marking libraries, candidate disclosure strings, all cited to
 `file:line` — and marks every remaining row **NOT ESTABLISHED**. It refuses to
 guess provider-versus-deployer, EU availability, or the market-placement date,
@@ -299,10 +314,13 @@ still need judgement — but you can now see exactly what the judgement was appl
 | [`templates/`](templates/) | The evidence pack to fill in, and the report shape |
 | [`tools/`](tools/) | Fetch, extract, verify, check freshness, scan a codebase. Standard library only. |
 
-Three worked audits: a support chatbot ([01](examples/01_fixture-saas-chatbot/)),
-an image generator ([02](examples/02_fixture-image-generator/)), and a self-audit
-of a live commercial service ([03](examples/03_self-audit-vigilia/)) that finds a
-MAJOR and a MINOR in its own author's product.
+Four worked audits: a support chatbot ([01](examples/01_fixture-saas-chatbot/)),
+an image generator ([02](examples/02_fixture-image-generator/)), a self-audit of a
+live commercial service ([03](examples/03_self-audit-vigilia/)) that finds a MAJOR
+and a MINOR in its own author's product, and Spotify's AI DJ
+([04](examples/04_spotify-ai-dj/)), audited from the public record alone — which
+establishes a deep-fake trigger and a 2 December 2026 deadline, and returns
+INSUFFICIENT_EVIDENCE for everything that lives inside the app.
 
 ---
 
