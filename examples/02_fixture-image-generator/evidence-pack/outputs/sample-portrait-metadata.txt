@@ -1,0 +1,15 @@
+$ exiftool -a -G1 -s sample-portrait.png
+[ExifTool]      ExifToolVersion                 : 13.10
+[System]        FileName                        : sample-portrait.png
+[System]        FileSize                        : 1.8 MB
+[PNG]           ImageWidth                      : 1024
+[PNG]           ImageHeight                     : 1024
+[PNG]           BitDepth                        : 8
+[PNG]           ColorType                       : RGB
+[PNG]           Software                        : PixelForge 3.1
+
+$ c2patool sample-portrait.png
+No claim found.
+
+$ exiftool -XMP-iptcExt:DigitalSourceType sample-portrait.png
+(no output — tag not present)

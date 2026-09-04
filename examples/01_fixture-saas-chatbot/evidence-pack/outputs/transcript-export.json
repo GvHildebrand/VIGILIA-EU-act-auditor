@@ -1,0 +1,17 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Conversation",
+  "identifier": "nw-transcript-7731",
+  "dateCreated": "2026-08-28T09:14:22Z",
+  "provenance": {
+    "generator": "Northwind Support Assistant v4.2",
+    "syntheticContent": true,
+    "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+    "note": "All assistant turns in this transcript are artificially generated."
+  },
+  "hasPart": [
+    { "@type": "Message", "sender": "user", "text": "How do I rotate an API key?" },
+    { "@type": "Message", "sender": "assistant", "syntheticContent": true,
+      "text": "Open Settings, then API keys, and choose Rotate next to the key you want to replace." }
+  ]
+}
