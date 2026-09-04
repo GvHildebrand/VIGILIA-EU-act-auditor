@@ -21,7 +21,7 @@
 artifact: <name, and the URL or path of what was audited>
 artifact_version: <commit, release or retrieval date of the artifact>
 audited_on: <YYYY-MM-DD>
-auditor: EU AI Act Article 50 Auditor
+auditor: VIGILIA-EU-act-auditor
 register_version: 1.0.0
 reference_fingerprint: f8a28ecc3811b9dc
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Nothing else.

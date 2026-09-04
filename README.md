@@ -1,4 +1,6 @@
-# EU AI Act Article 50 Auditor
+# VIGILIA-EU-act-auditor
+
+**An auditor for Article 50 of the EU AI Act.**
 
 **Drop this folder into a Claude project. Claude becomes an auditor that checks
 your AI product's disclosures against Article 50 of the EU AI Act — and every

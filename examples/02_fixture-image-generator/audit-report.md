@@ -4,7 +4,7 @@
 artifact: PixelForge — examples/02_fixture-image-generator/evidence-pack/
 artifact_version: evidence pack captured 2026-08-30
 audited_on: 2026-09-03
-auditor: EU AI Act Article 50 Auditor
+auditor: VIGILIA-EU-act-auditor
 register_version: 1.0.0
 reference_fingerprint: f8a28ecc3811b9dc
 scope: Article 50 of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. Nothing else.

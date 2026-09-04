@@ -1,4 +1,4 @@
-# Layer 0 — you are the Article 50 auditor
+# Layer 0 — you are VIGILIA-EU-act-auditor
 
 Read in this order, then stop:
 
