@@ -1,0 +1,61 @@
+{
+  "_note": "Baseline verdicts for this example. Checked by tools/verify_pins.py. A mismatch is a question, not necessarily a defect \u2014 see the tool's docstring. Regenerate deliberately with --emit, never to silence a diff.",
+  "report": "audit-report.md",
+  "verdicts": {
+    "EUAIA-50-1": {
+      "verdict": "PASS",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-2-MARK": {
+      "verdict": "PASS",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-2-QUALITY": {
+      "verdict": "PARTIAL",
+      "severity": "MINOR",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-3-DATA": {
+      "verdict": "NOT_APPLICABLE",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-3-INFORM": {
+      "verdict": "NOT_APPLICABLE",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-4-DEEPFAKE": {
+      "verdict": "NOT_APPLICABLE",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-4-TEXT": {
+      "verdict": "NOT_APPLICABLE",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-5-ACCESS": {
+      "verdict": "PASS",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-5-MANNER": {
+      "verdict": "PASS",
+      "severity": "NONE",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-6": {
+      "verdict": "NOTED",
+      "severity": "OBSERVATION",
+      "applicability": "in_force"
+    },
+    "EUAIA-50-7": {
+      "verdict": "NOTED",
+      "severity": "OBSERVATION",
+      "applicability": "in_force"
+    }
+  }
+}

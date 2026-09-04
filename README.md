@@ -182,7 +182,36 @@ was skipped; severity is recomputed from the matrix and must match; findings of
 breach point at real evidence; `INSUFFICIENT_EVIDENCE` says what would resolve it;
 `NOT_APPLICABLE` names a failed trigger or a satisfied exemption.
 
-Python 3.9+, standard library only. No install, no network, no dependencies.
+**`tools/verify_pins.py`** — the verdicts of the three shipped examples are
+pinned. If the register changes, or somebody re-runs the auditor and it reaches a
+different conclusion, the diff shows up as a failing check instead of passing
+silently.
+
+Python 3.9+, standard library only. No install, no dependencies, and `make
+verify` never touches the network — an auditor you can only check when the EU is
+reachable is a worse auditor.
+
+Two commands that *do* need network, deliberately kept out of `make verify`:
+
+```bash
+make freshness                      # has the law been amended since reference/ was pinned?
+make audit-repo REPO=../my-product  # scan a codebase into a half-filled evidence pack
+```
+
+`make freshness` asks the EU Publications Office SPARQL endpoint for every
+consolidated version of the Act that exists and compares the newest against what
+this repository pins, then re-fetches the three source documents and re-hashes
+them. `verify` proves `reference/` is unaltered; `freshness` asks the different
+question of whether it is still *current*. A standard that is intact but
+superseded is exactly as wrong as one that was edited.
+
+`make audit-repo` reads your codebase and writes an evidence pack with the rows a
+machine can honestly fill — model-provider calls, generation calls by modality,
+provenance-marking libraries, candidate disclosure strings, all cited to
+`file:line` — and marks every remaining row **NOT ESTABLISHED**. It refuses to
+guess provider-versus-deployer, EU availability, or the market-placement date,
+because those decide verdicts and a scanner that invented them would be the exact
+failure this repository exists to prevent.
 
 ### Try to break it
 
@@ -229,7 +258,7 @@ still need judgement — but you can now see exactly what the judgement was appl
 | [`provisions/`](provisions/) | The eleven obligations, machine-readable — what makes verification possible |
 | [`examples/`](examples/) | The reports, and the evidence they ran on |
 | [`templates/`](templates/) | The evidence pack to fill in, and the report shape |
-| [`tools/`](tools/) | Fetch, extract, verify. Standard library only. |
+| [`tools/`](tools/) | Fetch, extract, verify, check freshness, scan a codebase. Standard library only. |
 
 Three worked audits: a support chatbot ([01](examples/01_fixture-saas-chatbot/)),
 an image generator ([02](examples/02_fixture-image-generator/)), and a self-audit
@@ -237,6 +266,35 @@ of a live commercial service ([03](examples/03_self-audit-vigilia/)) that finds 
 MAJOR and a MINOR in its own author's product.
 
 ---
+
+## What this does not guarantee
+
+The checks above are deterministic. Everything in this section is not, and no
+script can make it so.
+
+**The verdict itself.** The scripts check *form*, not *truth*. Article 50(1) turns
+on whether your AI nature is "obvious from the point of view of a natural person
+who is reasonably well-informed, observant and circumspect" — a legal standard a
+court applies, not a fact you can look up. What you get is an argued position with
+the provision attached, not the answer.
+
+**Garbage in.** If your evidence pack says you are a deployer and you are actually
+a provider, you get a confidently wrong report that passes every check. The
+verifier cannot know your inputs are false.
+
+**Repeatability.** Run the auditor twice and the judgement-heavy obligations can
+come out differently, and *both runs pass citation verification*. That is why the
+examples ship with pinned verdicts — not to make the model deterministic, which is
+impossible, but so the disagreement is visible instead of silent.
+
+**Staleness.** `reference/` is pinned to a date. `make freshness` is how you find
+out it has moved; nothing checks automatically.
+
+So the claim is not that the output is right. It is that the output is
+**checkable** — the provision is named, the quote is real, nothing was skipped,
+and the parts that need a human are marked as needing one instead of buried in
+fluent prose. That is a smaller claim than most compliance tooling makes, and it
+is the only one this repository can keep.
 
 ## Scope, honestly
 
