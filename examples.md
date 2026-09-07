@@ -146,8 +146,10 @@ disclosure to fall back on. The report says so.
 €499. It is operated by the person who wrote this repository. It gets audited here
 by its own auditor, and it does not come out clean.
 
-**MAJOR** — the free compliance checker generates AI prose about the visitor's
-regulatory exposure, and nothing at that surface says an AI produced it:
+**MAJOR, found on 2026-09-03 and remediated on 2026-09-06** — the free compliance
+checker generated AI prose about the visitor's regulatory exposure, and nothing at
+that surface said an AI produced it. This is the finding as it stood at the first
+run; it is now a PASS, and the superseded evidence is kept in the pack:
 
 > ```finding
 > id: F-08
@@ -162,8 +164,8 @@ regulatory exposure, and nothing at that surface says an AI produced it:
 > finding: The disclosure is delivered at first exposure on the dispatch pages but not on the free compliance checker, where the only AI disclosure is a site footer encountered after the interaction.
 > ```
 
-**MINOR** — no machine-readable mark on any output, inside the Article 111(4)
-window until 2 December 2026. Vigilia's structured data names an `Organization` as
+**MINOR, still open** — no machine-readable mark on any output, inside the
+Article 111(4) window until 2 December 2026. Vigilia's structured data names an `Organization` as
 author, which tells a machine *who published*, not *that the text is synthetic*.
 
 The instructive part is that Vigilia's human-facing disclosure is genuinely

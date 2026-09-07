@@ -2,8 +2,8 @@
 
 ```audit
 artifact: Vigilia — https://aivigilia.com — public surfaces
-artifact_version: evidence captured 2026-09-03
-audited_on: 2026-09-03
+artifact_version: evidence captured 2026-09-06 (re-run; first run 2026-09-03)
+audited_on: 2026-09-06
 auditor: VIGILIA-EU-act-auditor
 register_version: 1.0.0
 reference_fingerprint: 3fa2319d6595d47a
@@ -26,7 +26,7 @@ Two AI systems Vigilia puts into service on its public site:
 2. **the free compliance checker** — a tool at `/about` that takes a visitor's
    description of their own AI system and returns a generated risk classification.
 
-Evidence was captured from the live site on 2026-09-03: the dispatch page as a
+Evidence was captured from the live site on 2026-09-06: the dispatch page as a
 reader meets it, the checker surface with every string shown at it, the complete
 machine-readable metadata of a published dispatch, the checker's response
 construction, the homepage disclosure section and compliance table, `llms.txt`,
@@ -61,9 +61,9 @@ operator's own published compliance table independently reaches.
 
 | Verdict | Count |
 |---|---|
-| PASS | 3 |
+| PASS | 4 |
 | FAIL | 1 |
-| PARTIAL | 1 |
+| PARTIAL | 0 |
 | NOT_APPLICABLE | 4 |
 | INSUFFICIENT_EVIDENCE | 0 |
 | NOTED | 2 |
@@ -71,11 +71,11 @@ operator's own published compliance table independently reaches.
 | Severity | Count |
 |---|---|
 | CRITICAL | 0 |
-| MAJOR | 1 |
+| MAJOR | 0 |
 | MINOR | 1 |
 | UNRESOLVED | 0 |
 | OBSERVATION | 2 |
-| NONE | 7 |
+| NONE | 8 |
 
 ### How much of this rests on the operator's word
 
@@ -91,21 +91,29 @@ carries its own `provenance`, so you can see which ones. `tools/verify_citations
 recomputes these totals from the findings and fails the report if the header
 misstates them — an audit may not understate how much it is trusting.
 
-Vigilia discloses its AI authorship better than most publishers and still fails
-two obligations, in two different ways.
+**This is a re-run.** The first run of this audit, on 2026-09-03, returned one
+MAJOR and one MINOR. The MAJOR has been remediated and is now a PASS. The record
+of what it said is kept rather than overwritten: the superseded capture is
+preserved in the evidence pack, and F-08 below carries both states.
 
 | | |
 |---|---|
-| **MAJOR** | F-08 · the free compliance checker generates AI prose with no disclosure at the point of interaction. The only AI disclosure on that page is the footer, below the tool and after the fact. |
-| **MINOR** | F-02 · no machine-readable mark of synthetic content on any output. Inside the Article 111(4) window until **2 December 2026**, after which the same evidence returns CRITICAL. |
+| **MAJOR** | ~~F-08 · the free compliance checker generates AI prose with no disclosure at the point of interaction.~~ **Remediated 2026-09-06.** The disclosure now sits above the submit control and is repeated on the returned snapshot, in five languages. Now PASS. |
+| **MINOR** | F-02 · no machine-readable mark of synthetic content on any output. Inside the Article 111(4) window until **2 December 2026**, after which the same evidence returns CRITICAL. **Open.** |
 
-Three PASS, four NOT_APPLICABLE, two OBSERVATION. The strong human-facing
-disclosure that earns the passes on 50(1) and 50(4) does nothing for 50(2), which
-is a duty owed to machines — and that gap is the single most instructive thing in
-this report.
+Four PASS, four NOT_APPLICABLE, two OBSERVATION, one FAIL. The strong
+human-facing disclosure that earns the passes on 50(1), 50(4) and now 50(5) does
+nothing for 50(2), which is a duty owed to machines — and that gap is the single
+most instructive thing left in this report.
 
-**Fix first:** one line of disclosure at the checker (F-08). It is the most severe
-finding and the cheapest to remedy. Then marking, before 2 December 2026 (F-02).
+**Fix next:** marking, before 2 December 2026 (F-02). It is now the only
+outstanding defect, and the window closes.
+
+**On the value of a self-audit that changed something.** The first run of this
+report was published with a MAJOR against its own author's commercial product.
+Three days later the defect is fixed and the verdict moved. That sequence — find,
+publish, remediate, re-run, keep the old capture — is the only evidence anyone
+should accept that an audit tool does anything at all.
 
 ---
 
@@ -340,51 +348,59 @@ evidence_quote: By Vigilia — an autonomous AI agent, human-supervised. … The
 finding: AI-generated text published to inform the public on matters of public interest is disclosed as such in the byline and colophon of every dispatch, without recourse to the editorial-responsibility exemption.
 ```
 
-### F-08 · Article 50(5), first sentence · PARTIAL · MAJOR
+### F-08 · Article 50(5), first sentence · PASS
+
+**Verdict changed at the 2026-09-06 re-run. It was PARTIAL / MAJOR on 2026-09-03.**
 
 50(5) governs how the information under paragraphs 1 to 4 reaches people: clearly,
 distinguishably, and **at the latest at the time of the first interaction or
-exposure**. Two surfaces are in play and they diverge.
+exposure**. Two surfaces are in play. At the first run they diverged; they no
+longer do.
 
-**The dispatches pass, comfortably.** The disclosure is in the byline, above the
-headline, before a word of the article can be read. It is its own element, plainly
-worded, and repeated in a colophon at the end. This is what "at the latest at the
-time of first exposure" looks like when it is done properly.
+**The dispatches pass, comfortably, and did before.** The disclosure is in the
+byline, above the headline, before a word of the article can be read. It is its
+own element, plainly worded, and repeated in a colophon at the end.
 
-**The free compliance checker does not.** A visitor lands on the page, reads
-"Describe your AI system", types a description of their own system, presses
-"Generate Compliance Snapshot", and receives generated prose telling them their
-regulatory risk tier. Nothing at that surface says the analysis is produced by an
-AI system. The strings around it — "instant", "classification", "snapshot", "Not
-legal advice — technical gap analysis" — describe the output and disclaim advice;
-none of them makes the disclosure. The only AI disclosure reachable is the site
-footer, which sits *below* the tool, is encountered *after* the interaction, and
-speaks about the publisher rather than about this tool's output.
+**The free compliance checker now passes too.** Read from the live DOM on
+2026-09-06: a `<p>` element carrying "This analysis is generated by Vigilia, an
+AI system." sits above the submit control, twenty-four pixels clear of it, in
+black on the white ground, as live text rather than an image or a background,
+without `aria-hidden`, and before the button in document order — so a
+screen-reader user meets it at the same point a sighted reader does. It is
+repeated beneath the result header, so the disclosure travels with the output if
+that block is screenshotted or read alone. Both strings are localised and were
+confirmed live in all five languages.
 
-So the information required by 50(1) exists (F-01) but is not provided in a clear
-and distinguishable manner at the latest at the time of first interaction on the
-surface where the interaction actually happens. That is a PARTIAL, and on an
-absolute duty in force the matrix returns **MAJOR** — the most severe finding in
-this report.
+The site footer still carries the publisher-level statement. The verdict no
+longer rests on it, which is the point: the disclosure is now made at the surface
+where the interaction happens, by the tool, about the tool.
 
-It is worth naming the irony rather than softening it: the checker whose purpose is
-to find Article 50 gaps in other people's products contains one. It is also the
-cheapest defect here to fix — a single line above the button.
+**What the previous run said, kept rather than deleted.** On 2026-09-03 nothing
+at that surface said the analysis was produced by an AI system; the only AI
+disclosure reachable was the site footer, below the tool and encountered after
+the interaction. That returned PARTIAL, and on an absolute duty in force the
+matrix returned MAJOR — the most severe finding in the first run. The superseded
+capture is preserved in the evidence pack so the remediation can be checked
+against what it replaced.
+
+It was worth naming the irony then and it is worth naming the resolution now: the
+checker whose purpose is to find Article 50 gaps in other people's products
+contained one, its own auditor found it, and it was fixed in three days.
 
 ```finding
 id: F-08
 provision: EUAIA-50-5-MANNER
-verdict: PARTIAL
-severity: MAJOR
+verdict: PASS
+severity: NONE
 duty_force: absolute
 applicability: in_force
 provenance: observed
 cite: reference/32024R1689/article-50.md:L24
 quote: The information referred to in paragraphs 1 to 4 shall be provided to the natural persons concerned in a clear and distinguishable manner at the latest at the time of the first interaction or exposure.
-evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/checker-surface.md:L27-L33
-evidence_quote: **No statement at this surface that the analysis is produced by an AI system.** … The only AI disclosure reachable from this page is the site footer … which sits below the checker, after the point of interaction.
-finding: The disclosure is delivered at first exposure on the dispatch pages but not on the free compliance checker, where the only AI disclosure is a site footer encountered after the interaction.
-remediation: Put the disclosure at the checker itself, above or beside the submit control — for example "This analysis is generated by Vigilia, an AI system" — and repeat it on the returned snapshot. One line, at the surface where the first interaction happens.
+evidence: examples/03_self-audit-vigilia/evidence-pack/first-interaction/checker-surface.md:L36-L47
+evidence_quote: **A statement at this surface that the analysis is produced by an AI system is present, and it precedes the control that starts the interaction.**
+finding: The disclosure is delivered at first exposure on both surfaces — in the byline on the dispatch pages, and above the submit control on the free compliance checker, where it is live text in document order before the control, repeated on the returned snapshot, and localised in all five languages.
+remediation: None outstanding. Previously remediated 2026-09-06 by placing the disclosure above the submit control and repeating it on the snapshot; re-test on any redesign of the checker surface, since this obligation is about placement and placement is what a redesign moves.
 ```
 
 ### F-09 · Article 50(5), second sentence · PASS
@@ -405,8 +421,8 @@ same point.
 
 Full conformance assessment against the accessibility directives is referred
 onward, not asserted. Note also that this verdict is about the disclosure that
-exists; on the checker surface the problem at F-08 is that there is no disclosure
-to make accessible.
+exists; at the first run the checker surface had no disclosure to make accessible,
+which F-08 records. It has one now, and it is live text in reading order.
 
 ```finding
 id: F-09

@@ -352,8 +352,9 @@ Start with [how it actually runs](examples/00_how-it-runs.md) — the folder doi
 the work, no tooling involved. Then three worked audits: a support chatbot
 ([01](examples/01_fixture-saas-chatbot/)), an image generator
 ([02](examples/02_fixture-image-generator/)), and a self-audit of a live commercial
-service ([03](examples/03_self-audit-vigilia/)) that returns a MAJOR and a MINOR
-against its own author's product.
+service ([03](examples/03_self-audit-vigilia/)) that returned a MAJOR and a MINOR
+against its own author's product, was acted on, and was re-run three days later
+with the MAJOR closed and the MINOR still open.
 
 ---
 

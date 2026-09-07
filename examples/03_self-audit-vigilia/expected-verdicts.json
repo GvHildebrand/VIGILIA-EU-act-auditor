@@ -1,5 +1,5 @@
 {
-  "_note": "Baseline verdicts for this example. Checked by _verify/verify_pins.py. A mismatch is a question, not necessarily a defect \u2014 see the tool's docstring. Regenerate deliberately with --emit, never to silence a diff.",
+  "_note": "Baseline verdicts for this example. Checked by _verify/verify_pins.py. A mismatch is a question, not necessarily a defect — see the tool's docstring. Regenerate deliberately with --emit, never to silence a diff. Re-run 2026-09-06: EUAIA-50-5-MANNER moved PARTIAL/MAJOR -> PASS/NONE after the operator shipped the disclosure at the checker surface.",
   "report": "audit-report.md",
   "verdicts": {
     "EUAIA-50-1": {
@@ -43,8 +43,8 @@
       "applicability": "in_force"
     },
     "EUAIA-50-5-MANNER": {
-      "verdict": "PARTIAL",
-      "severity": "MAJOR",
+      "verdict": "PASS",
+      "severity": "NONE",
       "applicability": "in_force"
     },
     "EUAIA-50-6": {
